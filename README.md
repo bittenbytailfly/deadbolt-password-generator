@@ -1,4 +1,4 @@
-# Deadbolt Password Generator Chrome Extension
+# Deadbolt Password Generator
 
 This is the base javaScript for Deadbolt Password Generator
 <http://www.deadboltpasswordgenerator.com/>
