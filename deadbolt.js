@@ -16,8 +16,12 @@
 //    along with Deadbolt Password Generator.  If not, see 
 //    <http://www.gnu.org/licenses/>.
 
-function encodePassword(passPhrase, pin, useSpecial) {
-    var multiplier = pin + '.669',
+function encodePassword(passPhrase, pin, useSpecial, caseSensitive) {
+    if (!caseSensitive) {
+        passPhrase = passPhrase.toLowerCase();
+    }
+
+    var multiplier = pin + '669.669',
         specialChars = '!\"$%^&*()',
         numericChars = '0123456789',
         ucaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
