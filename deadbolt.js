@@ -16,7 +16,12 @@
 //    along with Deadbolt Password Generator.  If not, see 
 //    <http://www.gnu.org/licenses/>.
 
-function encodePassword(passPhrase, pin, useSpecial, caseSensitive) {
+function encodePassword(passPhrase, pin, useSpecial, caseSensitive, passwordLength) {
+    
+    if (!passwordLength) {
+        passwordLength = 15;
+    }
+    
     if (!caseSensitive) {
         passPhrase = passPhrase.toLowerCase();
     }
@@ -30,7 +35,7 @@ function encodePassword(passPhrase, pin, useSpecial, caseSensitive) {
         password = "",
         i;
 
-    while (passPhrase.length < 15) {
+    while (passPhrase.length < passwordLength) {
         passPhrase += passPhrase;
     }
 
@@ -39,12 +44,12 @@ function encodePassword(passPhrase, pin, useSpecial, caseSensitive) {
             passCharRnd = (passChar / multiplier).toFixed(5),
             passPart = (passCharRnd + '').split('.')[1];
         passNumber = (passNumber * 1) + (passPart * 1);
-        if ((passNumber + '').length < 15) {
+        if ((passNumber + '').length < passwordLength) {
             passNumber = passNumber + '' + i;
         }
     }
 
-    for (i = 0; i < 15; i += 1) {
+    for (i = 0; i < passwordLength; i += 1) {
         var index = (passNumber + '').substr(i, 5),
             charsToUse;
 
