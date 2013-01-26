@@ -8,21 +8,55 @@
         
         <p>Type in your examples in the text boxes below to see the passwords generated.</p>
         
-        <p>Memorable Phrase: <input type="text" id="phrase" /><button>Go</button></p>
+        <p>Memorable Phrase: <input type="text" id="phrase" data-bind="value: phrase, valueUpdate: 'afterkeydown'" /><button data-bind="click: generatePassword">Go</button></p>
                 
+        <hr />
         <h2>Simple Password</h2>
         <code>
-            var passPhrase = <span>document.getElementById("phrase").value;</span><br />
+            var passPhrase = '<span data-bind="text: phrase"></span>';<br />
             var pin = '0000';<br />
-            encodePassword(passPhrase, pin, false, false, 15)
+            encodePassword(passPhrase, pin, false, false, 15);
         </code>
-        <h3></h3>
+        <h3>Generated: <span data-bind="text: simple"></span></h3>
         
-        <script type="text/javascript" href="../deadbolt.js"></script>
-        <script type="text/javascript" href="knockout-2.2.1.js"></script>
-        <script type="text/javascript">
-            
-        </script>
+        <hr />
+        <h2>Password with PIN</h2>
+        <code>
+            var passPhrase = '<span data-bind="text: phrase"></span>';<br />
+            var pin = '1234';<br />
+            encodePassword(passPhrase, pin, false, false, 15);
+        </code>
+        <h3>Generated: <span data-bind="text: withPin"></span></h3>
         
+        <hr />
+        <h2>Password with Special Characters</h2>
+        <code>
+            var passPhrase = '<span data-bind="text: phrase"></span>';<br />
+            var pin = '1234';<br />
+            encodePassword(passPhrase, pin, true, false, 15);
+        </code>
+        <h3>Generated: <span data-bind="text: withSpecial"></span></h3>
+        
+        <hr />
+        <h2>Case Sensitive Password</h2>
+        <code>
+            var passPhrase = '<span data-bind="text: phrase"></span>';<br />
+            var pin = '1234';<br />
+            encodePassword(passPhrase, pin, true, true, 15);
+        </code>
+        <h3>Generated: <span data-bind="text: caseSensitive"></span></h3>
+        
+        <hr />
+        <h2>Short Password</h2>
+        <code>
+            var passPhrase = '<span data-bind="text: phrase"></span>';<br />
+            var pin = '1234';<br />
+            encodePassword(passPhrase, pin, true, true, 8);
+        </code>
+        <h3>Generated: <span data-bind="text: caseSensitive"></span></h3>
+        
+        <script type="text/javascript" src="../deadbolt.js"></script>
+        <script type="text/javascript" src="js/knockout-2.2.1.js"></script>
+        <script type="text/javascript" src="js/examples.js"></script>
     </body>
 </html>
