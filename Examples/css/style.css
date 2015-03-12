@@ -2,3 +2,8 @@ body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
 h1 { font-size: 4em; }    
 h2 { font-size: 2em; }
 h3 { font-size: 1.2em; }
+.password{
+    font-family: Courier New, Courier, monospace;
+    text-align: center;
+    padding: 0 2em;
+}

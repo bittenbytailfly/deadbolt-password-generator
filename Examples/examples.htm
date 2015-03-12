@@ -10,46 +10,31 @@
             <em>encodePassword([Pass Phrase], [Four Digit PIN], [Use Special Characters], [Case Sensitive], [Password Length]);</em>
         </code>
         
-        <p>Type in your examples in the text boxes below to see the passwords generated.</p>
-        <p>Memorable Phrase: <input type="text" id="phrase" data-bind="value: phrase, valueUpdate: 'afterkeydown'" /><button data-bind="click: generatePassword">Go</button></p>
-        
-        <hr />
-        <h2>Simple Password</h2>
-        <code>
-            encodePassword('<span data-bind="text: phrase"></span>', '0000', false, false, 15);
-        </code>
-        <h3>Generated: <span data-bind="text: simple"></span></h3>
-        
-        <hr />
-        <h2>Password with PIN</h2>
-        <code>
-            encodePassword('<span data-bind="text: phrase"></span>', '1234', false, false, 15);
-        </code>
-        <h3>Generated: <span data-bind="text: withPin"></span></h3>
-        
-        <hr />
-        <h2>Password with Special Characters</h2>
-        <code>
-            encodePassword('<span data-bind="text: phrase"></span>', '1234', true, false, 15);
-        </code>
-        <h3>Generated: <span data-bind="text: withSpecial"></span></h3>
-        
-        <hr />
-        <h2>Case Sensitive Password</h2>
-        <code>
-            encodePassword('<span data-bind="text: phrase"></span>', '1234', true, true, 15);
-        </code>
-        <h3>Generated: <span data-bind="text: caseSensitive"></span></h3>
-        
-        <hr />
-        <h2>Short Password</h2>
-        <code>
-            encodePassword('<span data-bind="text: phrase"></span>', '1234', true, true, 8);
-        </code>
-        <h3>Generated: <span data-bind="text: short"></span></h3>
-        
+        <p>Type in your examples in the text boxes below to see the passwords generated (minimum 6 characters).</p>
+
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Simple</th>
+                    <th>With PIN</th>
+                    <th>With Characters</th>
+                    <th>Case Sensitive</th>
+                    <th>Short</th>
+                </tr>
+                <tbody data-bind="foreach: examples">
+                    <tr>
+                        <td><input type="text" data-bind="textinput: phrase" /></td>
+                        <td class="password" data-bind="text: simple"></td>
+                        <td class="password" data-bind="text: withPin"></td>
+                        <td class="password" data-bind="text: withSpecial"></td>
+                        <td class="password" data-bind="text: caseSensitive"></td>
+                        <td class="password" data-bind="text: short"></td>
+                    </tr>
+                </tbody>
+            </table>
+
         <script type="text/javascript" src="../deadbolt.js"></script>
-        <script type="text/javascript" src="js/knockout-2.2.1.js"></script>
+        <script type="text/javascript" src="js/knockout-3.3.0.js"></script>
         <script type="text/javascript" src="js/examples.js"></script>
     </body>
 </html>
