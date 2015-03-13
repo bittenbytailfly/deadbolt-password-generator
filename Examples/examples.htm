@@ -6,10 +6,20 @@
     <body>
         <h1>Example Usage</h1>
         
-        <code>
-            <em>encodePassword([Pass Phrase], [Four Digit PIN], [Use Special Characters], [Case Sensitive], [Password Length]);</em>
-        </code>
+        <pre>encodePassword([Pass Phrase], [options] {
+    pin: [Four Digit PIN], 
+    useSpecial: [Use Special Characters], 
+    caseSensitive: [Case Sensitive], 
+    passwordLength: [Password Length]
+});</pre>
         
+        <p>
+            Password Engine: <select data-bind="options: availableEngines,
+                       optionsText: 'name',
+                        optionsValue: 'id',
+                       value: selectedEngine"></select>
+        </p>
+
         <p>Type in your examples in the text boxes below to see the passwords generated (minimum 6 characters).</p>
 
             <table>

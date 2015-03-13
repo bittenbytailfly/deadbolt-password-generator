@@ -17,56 +17,55 @@
 //    <http://www.gnu.org/licenses/>.
 
 var deadboltPasswordGenerator = (function () {
-    return {
-        encodePassword: function (passPhrase, pin, useSpecial, caseSensitive, passwordLength) {
 
-            if (passPhrase.length < 6) {
-                return '';
+    var self = this;
+
+    self.specialChars = '!\"$%^&*()';
+    self.numericChars = '0123456789';
+    self.ucaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    self.lcaseChars = 'abcdefghijklmnopqrstuvwxyz';
+
+    self.getNumericPasswordString = function (passPhrase, options) {
+        var multiplier = options.pin + '669.669';
+        var passNumber = 0;
+
+        while (passPhrase.length < options.passwordLength) {
+            passPhrase += passPhrase;
+        }
+
+        for (var i = 0; i < passPhrase.length; i += 1) {
+            var passChar = passPhrase.charCodeAt(i);
+            var passCharRnd = (passChar / multiplier).toFixed(5);
+            var passPart = (passCharRnd + '').split('.')[1];
+            var passNumber = (passNumber * 1) + (passPart * 1);
+            if ((passNumber + '').length < options.passwordLength) {
+                passNumber = passNumber + '' + i;
             }
+        }
 
-            if (!passwordLength) {
-                passwordLength = 15;
-            }
+        return passNumber;
+    }
 
-            if (!caseSensitive) {
-                passPhrase = passPhrase.toLowerCase();
-            }
 
-            var multiplier = pin + '669.669',
-                specialChars = '!\"$%^&*()',
-                numericChars = '0123456789',
-                ucaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-                lcaseChars = 'abcdefghijklmnopqrstuvwxyz',
-                passNumber = 0,
-                password = "",
-                i;
+    self.engines = new Array({
+        id: 1,
+        name: 'English Breakfast',
+        process: function (passPhrase, options) {
+            var password = '';
+            var passNumber = self.getNumericPasswordString(passPhrase, options);
 
-            while (passPhrase.length < passwordLength) {
-                passPhrase += passPhrase;
-            }
-
-            for (i = 0; i < passPhrase.length; i += 1) {
-                var passChar = passPhrase.charCodeAt(i),
-                    passCharRnd = (passChar / multiplier).toFixed(5),
-                    passPart = (passCharRnd + '').split('.')[1];
-                passNumber = (passNumber * 1) + (passPart * 1);
-                if ((passNumber + '').length < passwordLength) {
-                    passNumber = passNumber + '' + i;
-                }
-            }
-
-            for (i = 0; i < passwordLength; i += 1) {
+            for (var i = 0; i < options.passwordLength; i += 1) {
                 var index = (passNumber + '').substr(i, 5),
                     charsToUse;
 
-                if (useSpecial && (i % 7 === 6)) {
-                    charsToUse = specialChars;
+                if (options.useSpecial && (i % 7 === 6)) {
+                    charsToUse = self.specialChars;
                 } else if (i % 4 === 0) {
-                    charsToUse = numericChars;
+                    charsToUse = self.numericChars;
                 } else if (i % 3 !== 0) {
-                    charsToUse = lcaseChars;
+                    charsToUse = self.lcaseChars;
                 } else {
-                    charsToUse = ucaseChars;
+                    charsToUse = self.ucaseChars;
                 }
 
                 var arrayMarker = index % charsToUse.length;
@@ -74,6 +73,93 @@ var deadboltPasswordGenerator = (function () {
             }
 
             return password;
+        }
+    },
+    {
+        id: 2,
+        name: 'Earl Grey',
+        process: function (passPhrase, options) {
+            var password = '';
+            var passNumber = self.getNumericPasswordString(passPhrase, options);
+
+            var charMarker = (passNumber + '').substring(5, 6);
+
+            var splicedPassNumber = new Array();
+            var passNumberArray = (passNumber + '').split('');
+            var passNumberLength = (passNumber + '').length;
+            for (var i = 0; i < passNumberLength; i++) {
+                splicedPassNumber.push(passNumberArray[i]);
+                if ((charMarker + i) % 2 == 0) {
+                    splicedPassNumber.push(passNumberArray[passNumberLength - i]);
+                }
+            }
+            passNumber = splicedPassNumber.join('');
+
+            var symbolInsert1 = passNumber % 15;
+            var symbolInsert2 = passNumber % 7;
+
+            if (symbolInsert1 == symbolInsert2) {
+                symbolInsert1 += 2;
+                if (symbolInsert1 > options.passwordLength) {
+                    symbolInsert1 = 0;
+                }
+            }
+
+            
+
+            for (var i = 0; i < options.passwordLength; i += 1) {
+                var index = (passNumber + '').substr(i, 5),
+                    charsToUse;
+                              
+                if (options.useSpecial && (i === symbolInsert1 || i === symbolInsert2)) {
+                    charsToUse = self.specialChars;
+                } else if ((charMarker + i) % 4 === 0) {
+                    charsToUse = self.numericChars;
+                } else if ((charMarker + i) % 3 !== 0) {
+                    charsToUse = self.lcaseChars;
+                } else {
+                    charsToUse = self.ucaseChars;
+                }
+
+                var arrayMarker = index % charsToUse.length;
+                password += charsToUse.charAt(arrayMarker);
+            }
+
+            return password;
+        }
+    });
+
+    self.getEngineById = function (id) {
+        for (var i = 0; i < self.engines.length; i++) {
+            if (self.engines[i].id === id) {
+                return self.engines[i];
+            }
+        }
+        return null;
+    };
+
+    return {
+        getAvailableEngines: function () {
+            return self.engines;
+        },
+        encodePassword: function (passPhrase, options) {
+            if (passPhrase.length < 6) {
+                return '';
+            }
+
+            if (!options.caseSensitive) {
+                passPhrase = passPhrase.toLowerCase();
+            }
+
+            var engineId = options.engineId || 1;
+            var passwordOptions = {
+                pin: options.pin || '0000',
+                useSpecial: options.useSpecial === undefined ? true : options.useSpecial,
+                passwordLength: options.passwordLength || 15
+            };
+            
+            var engine = self.getEngineById(engineId);
+            return engine.process(passPhrase, passwordOptions);
         }
     };
 })();
