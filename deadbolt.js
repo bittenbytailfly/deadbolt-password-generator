@@ -63,7 +63,7 @@ var deadboltPasswordGenerator = (function() {
 
     self.v2Encode = function(passPhrase, multiplier, options) {
         var password = '';
-        var passNumber = self.getNumericPasswordString(passPhrase, options);
+        var passNumber = self.getNumericPasswordString(passPhrase, multiplier, options);
 
         var charMarker = (passNumber + '').substring(5, 6);
 
