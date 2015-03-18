@@ -6,29 +6,35 @@
     <body>
         <h1>Example Usage</h1>
         
-        <code>
-            <em>encodePassword([Pass Phrase], [Four Digit PIN], [Use Special Characters], [Case Sensitive], [Password Length]);</em>
-        </code>
+        <pre>encodePassword([Pass Phrase], [options] {
+    pin: [Four Digit PIN], 
+    useSpecial: [Use Special Characters], 
+    caseSensitive: [Case Sensitive], 
+    passwordLength: [Password Length]
+});</pre>
         
+        <p>
+            Password Engine: <select data-bind="options: availableEngines,
+                       optionsText: 'name',
+                        optionsValue: 'id',
+                       value: selectedEngine"></select>
+        </p>
+
         <p>Type in your examples in the text boxes below to see the passwords generated (minimum 6 characters).</p>
 
             <table>
                 <tr>
                     <th></th>
-                    <th>Simple</th>
-                    <th>With PIN</th>
-                    <th>With Characters</th>
-                    <th>Case Sensitive</th>
-                    <th>Short</th>
+                    <!-- ko foreach: configurations -->
+                        <th data-bind="text: name"></th>
+                    <!-- /ko -->
                 </tr>
                 <tbody data-bind="foreach: examples">
                     <tr>
                         <td><input type="text" data-bind="textinput: phrase" /></td>
-                        <td class="password" data-bind="text: simple"></td>
-                        <td class="password" data-bind="text: withPin"></td>
-                        <td class="password" data-bind="text: withSpecial"></td>
-                        <td class="password" data-bind="text: caseSensitive"></td>
-                        <td class="password" data-bind="text: short"></td>
+                        <!-- ko foreach: $parent.configurations -->
+                            <td class="password" data-bind="text: $root.encodePassword($parent.phrase(), options())"></td>
+                        <!-- /ko -->
                     </tr>
                 </tbody>
             </table>

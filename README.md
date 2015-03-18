@@ -9,5 +9,5 @@ This is the base javaScript for Deadbolt Password Generator
 
 # License
 
-Copyright 2009-2013 Ed Carter
-GNU GENERAL PUBLIC LICENSE Version 3 - <http://www.gnu.org/licenses/>
+MIT License (MIT)
+Copyright (c) 2009-2015 Ed Carter
