@@ -51,6 +51,7 @@ function deadboltExamplePage() {
     self.configurations.push(new deadboltConfiguration('High PIN', '9999', true, true, 15));
     self.configurations.push(new deadboltConfiguration('Short (Low PIN)', '0000', true, true, 8));
     self.configurations.push(new deadboltConfiguration('Short (High PIN)', '9999', true, true, 8));
+    self.configurations.push(new deadboltConfiguration('No Symbols (High PIN)', '9999', false, true, 15));
 };
 
 var examples = new Array();
