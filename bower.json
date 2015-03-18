@@ -13,6 +13,7 @@
   ],
   "license": "MIT",
   "ignore": [
-    "examples"
+    "examples",
+    "Examples"
   ]
 }
