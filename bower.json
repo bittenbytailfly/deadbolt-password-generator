@@ -1,8 +1,18 @@
-﻿{
-    "name": "deadbolt-password-generator",
-    "version": "2.0.0",
-    "main": "",
-    "keywords": [ "deadbolt", "password", "security" ],
-    "ignore": [ "Examples/**.*" ],
-    "private": false
+{
+  "name": "deadbolt-password-generator",
+  "version": "2.0.0",
+  "homepage": "http://www.deadboltpasswordgenerator.com",
+  "authors": [
+    "Ed Carter <bittenbytailfly@server.fake>"
+  ],
+  "main": "deadbolt.min.js",
+  "keywords": [
+    "deadbolt",
+    "password",
+    "security"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "examples"
+  ]
 }
